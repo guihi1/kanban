@@ -4,8 +4,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name="users")
 public class User {
 
     @Id
@@ -20,11 +22,11 @@ public class User {
         
     }
 
-    public User(String email, long id, String password, String username) {
-        this.email = email;
+    public User(long id, String username, String password, String email) {
         this.id = id;
-        this.password = password;
         this.username = username;
+        this.password = password;
+        this.email = email;
     }
 
     public long getId() {

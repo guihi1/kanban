@@ -23,6 +23,16 @@ public class Tag {
     @JsonIgnore
     private List<Task> tasks;
 
+    public Tag() {
+    }
+
+    public Tag(long id, String title, String color, List<Task> tasks) {
+        this.id = id;
+        this.title = title;
+        this.color = color;
+        this.tasks = tasks;
+    }
+
     public long getId() {
         return id;
     }

@@ -23,6 +23,17 @@ public class Board {
     @OneToMany(mappedBy = "board")
     private List<Task> tasks;
 
+    public Board() {
+    }
+
+    public Board(long id, String title, int orderIndex, Project project, List<Task> tasks) {
+        this.id = id;
+        this.title = title;
+        this.orderIndex = orderIndex;
+        this.project = project;
+        this.tasks = tasks;
+    }
+
     public long getId() {
         return id;
     }

@@ -32,6 +32,23 @@ public class Task {
     @ManyToMany
     @JoinTable(name = "task_tags")
     private List<Tag> tags;
+ 
+    public Task() {
+    }
+
+    public Task(long id, String title, String description, int orderIndex, Date creationDate, Date dueDate,
+            String priority, Board board, User assignedUser, List<Tag> tags) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.orderIndex = orderIndex;
+        this.creationDate = creationDate;
+        this.dueDate = dueDate;
+        this.priority = priority;
+        this.board = board;
+        this.assignedUser = assignedUser;
+        this.tags = tags;
+    }
 
     public long getId() {
         return id;

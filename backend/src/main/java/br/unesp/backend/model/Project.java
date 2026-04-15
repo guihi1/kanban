@@ -22,6 +22,16 @@ public class Project {
     @OneToMany(mappedBy = "project")
     private List<Board> boards;
 
+    public Project() {
+    }
+
+    public Project(long id, String name, User user, List<Board> boards) {
+        this.id = id;
+        this.name = name;
+        this.user = user;
+        this.boards = boards;
+    }
+
     public long getId() {
         return id;
     }

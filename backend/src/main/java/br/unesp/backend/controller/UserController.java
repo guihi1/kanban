@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import br.unesp.backend.model.User;
 import br.unesp.backend.repository.UserRepository;
@@ -30,6 +29,7 @@ public class UserController {
     public ResponseEntity getUser(@PathVariable(value = "id") Long id) {
 
         Optional<User> user = userRepository.findById(id);
+        
         return new ResponseEntity(user.get(),HttpStatus.OK);
 
     }
@@ -50,16 +50,17 @@ public class UserController {
     }
 
     @PutMapping(value="/", produces = "application/json")
-    public ResponseEntity<User> atualizar(@RequestBody User user){
+    public ResponseEntity<User> updateUser(@RequestBody User user){
 
         User updatedUser = userRepository.save(user);
         return new ResponseEntity<User>(updatedUser,HttpStatus.OK);
     }
 
     @DeleteMapping(value="/{id}", produces= "application/json")
-    public ResponseEntity<User> atualizar(@PathVariable("id") Long id){
+    public ResponseEntity<User> deleteUser(@PathVariable("id") Long id){
 
         userRepository.deleteById((id));
+        
         return new ResponseEntity("ok",HttpStatus.OK);
     }
 }
