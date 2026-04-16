@@ -59,7 +59,7 @@ public class ProjectController {
     @DeleteMapping(value= "/{id}", produces = "application/json")
     public ResponseEntity<Object> deleteProject(@PathVariable(value = "id") Long id){
 
-        projectRepository.deleteById(id);;
+        projectRepository.deleteById(id);
         
         return new ResponseEntity<>(HttpStatus.OK);
     }

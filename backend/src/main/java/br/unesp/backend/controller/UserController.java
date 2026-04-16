@@ -26,19 +26,19 @@ public class UserController {
     private UserRepository userRepository;
 
     @GetMapping(value = "/{id}", produces = "application/json")
-    public ResponseEntity getUser(@PathVariable(value = "id") Long id) {
+    public ResponseEntity<User> getUser(@PathVariable(value = "id") Long id) {
 
         Optional<User> user = userRepository.findById(id);
         
-        return new ResponseEntity(user.get(),HttpStatus.OK);
+        return new ResponseEntity<>(user.get(),HttpStatus.OK);
 
     }
 
     @GetMapping(value = "/", produces = "application/json")
-    public ResponseEntity getAllUsers() {
+    public ResponseEntity<ArrayList<User>> getAllUsers() {
 
         ArrayList<User>  allUsers = (ArrayList<User>)userRepository.findAll();
-        return new ResponseEntity(allUsers, HttpStatus.OK);
+        return new ResponseEntity<>(allUsers, HttpStatus.OK);
 
     }
 
@@ -46,21 +46,20 @@ public class UserController {
     public ResponseEntity<User> registerUser(@RequestBody User user){
 
         User newUser = userRepository.save(user);
-        return new ResponseEntity<User>(newUser,HttpStatus.OK);
+        return new ResponseEntity<>(newUser,HttpStatus.OK);
     }
 
     @PutMapping(value="/", produces = "application/json")
     public ResponseEntity<User> updateUser(@RequestBody User user){
 
         User updatedUser = userRepository.save(user);
-        return new ResponseEntity<User>(updatedUser,HttpStatus.OK);
+        return new ResponseEntity<>(updatedUser,HttpStatus.OK);
     }
 
     @DeleteMapping(value="/{id}", produces= "application/json")
-    public ResponseEntity<User> deleteUser(@PathVariable("id") Long id){
+    public ResponseEntity<Object> deleteUser(@PathVariable("id") Long id){
 
         userRepository.deleteById((id));
-        
-        return new ResponseEntity("ok",HttpStatus.OK);
+        return new ResponseEntity<>("ok",HttpStatus.OK);
     }
 }
