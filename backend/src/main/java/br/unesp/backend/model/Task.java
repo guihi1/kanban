@@ -3,6 +3,8 @@ package br.unesp.backend.model;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,7 +17,8 @@ import jakarta.persistence.ManyToOne;
 public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
+    
     private String title;
     private String description;
     private int orderIndex;
@@ -24,6 +27,7 @@ public class Task {
     private String priority;
 
     @ManyToOne
+    @JsonBackReference
     private Board board;
 
     @ManyToOne
@@ -36,7 +40,7 @@ public class Task {
     public Task() {
     }
 
-    public Task(long id, String title, String description, int orderIndex, Date creationDate, Date dueDate,
+    public Task(Long id, String title, String description, int orderIndex, Date creationDate, Date dueDate,
             String priority, Board board, User assignedUser, List<Tag> tags) {
         this.id = id;
         this.title = title;
@@ -50,11 +54,11 @@ public class Task {
         this.tags = tags;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

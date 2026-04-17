@@ -61,6 +61,6 @@ public class ProjectController {
 
         projectRepository.deleteById(id);
         
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>("ok",HttpStatus.OK);
     }
 };

@@ -2,6 +2,9 @@ package br.unesp.backend.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,20 +16,22 @@ import jakarta.persistence.OneToMany;
 public class Board {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
     private String title;
     private int orderIndex;
 
     @ManyToOne
+    @JsonBackReference
     private Project project;
 
     @OneToMany(mappedBy = "board")
+    @JsonManagedReference
     private List<Task> tasks;
 
     public Board() {
     }
 
-    public Board(long id, String title, int orderIndex, Project project, List<Task> tasks) {
+    public Board(Long id, String title, int orderIndex, Project project, List<Task> tasks) {
         this.id = id;
         this.title = title;
         this.orderIndex = orderIndex;
@@ -34,11 +39,11 @@ public class Board {
         this.tasks = tasks;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -14,7 +14,7 @@ import jakarta.persistence.ManyToMany;
 public class Tag {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
 
     private String title;
     private String color;
@@ -26,18 +26,18 @@ public class Tag {
     public Tag() {
     }
 
-    public Tag(long id, String title, String color, List<Task> tasks) {
+    public Tag(Long id, String title, String color, List<Task> tasks) {
         this.id = id;
         this.title = title;
         this.color = color;
         this.tasks = tasks;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
