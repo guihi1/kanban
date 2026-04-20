@@ -21,40 +21,43 @@ import br.unesp.backend.repository.TaskRepository;
 @Controller("TaskController")
 @RequestMapping(value = "task")
 public class TaskController {
-    
+
     @Autowired
     private TaskRepository taskRepository;
 
     @GetMapping(value = "/{id}", produces = "application/json")
-    public ResponseEntity<Task> getTask(@PathVariable(value = "id") Long id){
+    public ResponseEntity<Task> getTask(@PathVariable(value = "id") Long id) {
 
         Optional<Task> task = taskRepository.findById(id);
         return new ResponseEntity<>(task.get(), HttpStatus.OK);
     }
 
     @GetMapping(value = "/", produces = "application/json")
-    public ResponseEntity<ArrayList<Task>> getAllTasks(){
+    public ResponseEntity<ArrayList<Task>> getAllTasks() {
 
         ArrayList<Task> allTasks = (ArrayList<Task>) taskRepository.findAll();
         return new ResponseEntity<>(allTasks, HttpStatus.OK);
     }
 
-    @PostMapping(value = "/", produces = "application/json")
-    public ResponseEntity<Task> registerTask(@RequestBody Task task){
-        
+    @PostMapping(value = "/")
+    public ResponseEntity<Task> registerTask(@RequestBody Task task) {
+        if (task.getCreationDate() == null) {
+            task.setCreationDate(new java.util.Date());
+        }
+
         Task newTask = taskRepository.save(task);
-        return new ResponseEntity<>(newTask, HttpStatus.OK);
+        return new ResponseEntity<>(newTask, HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/", produces = "application/json")
-    public ResponseEntity<Task> updateTask(@RequestBody Task task){
-        
+    public ResponseEntity<Task> updateTask(@RequestBody Task task) {
+
         Task updatedTask = taskRepository.save(task);
         return new ResponseEntity<>(updatedTask, HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/{id}", produces = "application/json")
-    public ResponseEntity<Object> deleteTask(@PathVariable(value = "id") Long id){
+    public ResponseEntity<Object> deleteTask(@PathVariable(value = "id") Long id) {
 
         taskRepository.deleteById(id);
         return new ResponseEntity<>("ok", HttpStatus.OK);
