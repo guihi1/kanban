@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.unesp.backend.model.AuthenticationDTO;
+import br.unesp.backend.model.LoginResponseDTO;
+import br.unesp.backend.model.RegisterDTO;
+import br.unesp.backend.model.User;
 import br.unesp.backend.repository.UserRepository;
 import br.unesp.backend.security.TokenService;
 import jakarta.validation.Valid;
@@ -28,17 +32,17 @@ public class AuthenticationController {
     private TokenService tokenService;
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody @Valid AuthenticationDTO data) {
+    public ResponseEntity<Object> login(@RequestBody @Valid AuthenticationDTO data) {
 
         // É uma boa prática armazenarmos as senhas do usuário como HASH no banco de
         // dados.
         // Dessa maneira, caso haja um vazamento do BD, as senhas estarão criptografadas
         // e não poderão ser diretamente acessadas.
-        var usernamePassword = new UsernamePasswordAuthenticationToken(data.login(), data.password());
+        var usernamePassword = new UsernamePasswordAuthenticationToken(data.username(), data.password());
 
         try {
             var auth = this.authenticationManager.authenticate(usernamePassword);
-            var token = tokenService.generateToken((Usuario) auth.getPrincipal());
+            var token = tokenService.generateToken((User) auth.getPrincipal());
 
             return ResponseEntity.ok(new LoginResponseDTO(token));
         } catch (Exception e) {
@@ -49,9 +53,9 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity register(@RequestBody @Valid RegisterDTO data) {
+    public ResponseEntity<Object> register(@RequestBody @Valid RegisterDTO data) {
         // Primeiro verifica se já não existe outro usuário cadastrado com o mesmo login
-        if (this.usuarioRepository.findByLogin(data.login()) != null)
+        if (this.usuarioRepository.findByUsername(data.username()) != null)
             return ResponseEntity.badRequest().build();
 
         // Caso não exista, vamos encriptar a senha para salvar no BD. A senha bruta do
@@ -59,11 +63,10 @@ public class AuthenticationController {
         // NÃO DEVE SER INSERIDA NO BD POR MEDIDAS DE SEGURANÇA.
 
         String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
-        System.out.println(data.login());
+        System.out.println(data.username());
         System.out.println(encryptedPassword);
-        System.out.println(data.role());
 
-        Person newUser = new Person(data.login(), encryptedPassword, data.role(), "teste", "teste");
+        User newUser = new User(data.username(), encryptedPassword);
 
         this.usuarioRepository.save(newUser);
 
