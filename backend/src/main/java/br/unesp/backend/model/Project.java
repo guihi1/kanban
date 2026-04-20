@@ -2,6 +2,7 @@ package br.unesp.backend.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Entity;
@@ -19,6 +20,7 @@ public class Project {
     private String name;
 
     @ManyToOne
+    @JsonBackReference
     private User user;
 
     @OneToMany(mappedBy = "project")
