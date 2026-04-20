@@ -18,7 +18,7 @@ public class Board {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String title;
-    private int orderIndex;
+    private Integer orderIndex;
 
     @ManyToOne
     @JsonBackReference
@@ -31,7 +31,7 @@ public class Board {
     public Board() {
     }
 
-    public Board(Long id, String title, int orderIndex, Project project, List<Task> tasks) {
+    public Board(Long id, String title, Integer orderIndex, Project project, List<Task> tasks) {
         this.id = id;
         this.title = title;
         this.orderIndex = orderIndex;
@@ -55,11 +55,11 @@ public class Board {
         this.title = title;
     }
 
-    public int getOrderIndex() {
+    public Integer getOrderIndex() {
         return orderIndex;
     }
 
-    public void setOrderIndex(int orderIndex) {
+    public void setOrderIndex(Integer orderIndex) {
         this.orderIndex = orderIndex;
     }
 

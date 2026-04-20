@@ -21,7 +21,7 @@ public class Task {
     
     private String title;
     private String description;
-    private int orderIndex;
+    private Integer orderIndex;
     private Date creationDate;
     private Date dueDate;
     private String priority;
@@ -40,7 +40,7 @@ public class Task {
     public Task() {
     }
 
-    public Task(Long id, String title, String description, int orderIndex, Date creationDate, Date dueDate,
+    public Task(Long id, String title, String description, Integer orderIndex, Date creationDate, Date dueDate,
             String priority, Board board, User assignedUser, List<Tag> tags) {
         this.id = id;
         this.title = title;
@@ -78,11 +78,11 @@ public class Task {
         this.description = description;
     }
 
-    public int getOrderIndex() {
+    public Integer getOrderIndex() {
         return orderIndex;
     }
 
-    public void setOrderIndex(int orderIndex) {
+    public void setOrderIndex(Integer orderIndex) {
         this.orderIndex = orderIndex;
     }
 
