@@ -15,6 +15,7 @@ import br.unesp.backend.model.AuthenticationDTO;
 import br.unesp.backend.model.LoginResponseDTO;
 import br.unesp.backend.model.RegisterDTO;
 import br.unesp.backend.model.User;
+import br.unesp.backend.model.UserRole;
 import br.unesp.backend.repository.UserRepository;
 import br.unesp.backend.security.TokenService;
 import jakarta.validation.Valid;
@@ -66,7 +67,7 @@ public class AuthenticationController {
         System.out.println(data.username());
         System.out.println(encryptedPassword);
 
-        User newUser = new User(data.username(), encryptedPassword);
+        User newUser = new User(data.username(), encryptedPassword, UserRole.USER);
 
         this.usuarioRepository.save(newUser);
 

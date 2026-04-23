@@ -29,6 +29,7 @@ public class User implements UserDetails {
     private String username;
     private String password;
 
+    private UserRole role;
 
     @OneToMany(mappedBy = "user")
     @JsonManagedReference
@@ -51,9 +52,10 @@ public class User implements UserDetails {
 
     }
 
-    public User(String username, String password) {
+    public User(String username, String password, UserRole role) {
         this.username = username;
         this.password = password;
+        this.role = role;
     }
 
 
@@ -84,7 +86,14 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        if (this.role == UserRole.ADMIN){
+            return List.of(
+                new SimpleGrantedAuthority("ROLE_ADMIN"),   // Admin
+                new SimpleGrantedAuthority("ROLE_USER")     // é ao mesmo tempo user normal
+                );
+        }else{
+            return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        }
     }
 
     @Override
@@ -115,6 +124,14 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public UserRole getRole() {
+        return role;
+    }
+
+    public void setUserRole(UserRole role) {
+        this.role = role;
     }
 
 }
