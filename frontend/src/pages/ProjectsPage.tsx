@@ -1,44 +1,41 @@
-import { Link } from 'react-router-dom';
-import { mockProjects } from '../data/mockData';
-import Navbar from '../components/Navbar';
+import { Link } from "react-router-dom";
+import { mockProjects } from "../data/mockData";
+import Navbar from "../components/Navbar";
 
 const ProjectsPage = () => {
   return (
-    <div className="min-vh-100 bg-light">
+    <div className="min-h-screen bg-slate-50 font-sans">
       <Navbar />
-      
-      <div className="container">
-        <div className="d-flex justify-content-between align-items-center mb-4">
-          <h2 className="fw-bold text-dark">Meus Projetos</h2>
-          <button className="btn btn-primary d-flex align-items-center gap-2">
-            <i className="bi bi-plus-lg"></i>
-            Novo Projeto
-          </button>
+
+      <div className="max-w-5xl mx-auto px-6 py-12">
+        <div className="flex items-center justify-between mb-8">
+          <h2 className="text-2xl font-bold text-slate-900">Projects</h2>
         </div>
 
-        <div className="row g-4">
-          {mockProjects.map(project => (
-            <div key={project.id} className="col-12 col-md-6 col-lg-4">
-              <div className="card h-100 shadow-sm border-0 transition-hover">
-                <div className="card-body">
-                  <h5 className="card-title fw-bold mb-3">{project.name}</h5>
-                  
-                  <div className="d-flex justify-content-between text-muted small mb-4">
-                    <span>
-                      <i className="bi bi-layout-three-columns me-2"></i>
-                      {project.boards.length} Quadros
-                    </span>
-                    <span>
-                      <i className="bi bi-card-checklist me-2"></i>
-                      {project.boards.reduce((acc, b) => acc + b.tasks.length, 0)} Tarefas
-                    </span>
-                  </div>
-                  
-                  <Link to={`/projects/${project.id}`} className="btn btn-outline-primary w-100">
-                    Acessar Kanban
-                  </Link>
-                </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {mockProjects.map((project) => (
+            <div
+              key={project.id}
+              className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 hover:shadow-md transition-shadow"
+            >
+              <h5 className="font-bold text-lg text-slate-900 mb-4">
+                {project.name}
+              </h5>
+
+              <div className="flex justify-between text-sm text-slate-500 mb-6">
+                <span>{project.boards.length} Boards</span>
+                <span>
+                  {project.boards.reduce((acc, b) => acc + b.tasks.length, 0)}{" "}
+                  Tasks
+                </span>
               </div>
+
+              <Link
+                to={`/projects/${project.id}`}
+                className="block w-full text-center bg-slate-900 hover:bg-slate-800 text-white font-medium py-2 rounded-lg transition-colors"
+              >
+                Open Kanban
+              </Link>
             </div>
           ))}
         </div>

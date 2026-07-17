@@ -16,7 +16,7 @@ export interface Task {
   order: number;
   creationDate: string;
   dueDate: string;
-  priority: 'Baixa' | 'Média' | 'Alta' | string;
+  priority: "Baixa" | "Média" | "Alta" | string;
   tags: Tag[];
   assignees?: User[];
 }

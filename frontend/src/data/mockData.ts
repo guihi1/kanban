@@ -1,105 +1,159 @@
-import type { Project, User, Tag } from '../models/types';
+import type { Project, User, Tag } from "../models/types";
 
 export const mockUsers: User[] = [
-  { username: 'joao.silva', email: 'joao@example.com' },
-  { username: 'maria.souza', email: 'maria@example.com' }
+  { username: "AM", email: "am@example.com" },
+  { username: "JL", email: "jl@example.com" },
+  { username: "KO", email: "ko@example.com" },
+  { username: "RN", email: "rn@example.com" },
+  { username: "SP", email: "sp@example.com" },
+  { username: "MT", email: "mt@example.com" },
+  { username: "DA", email: "da@example.com" },
 ];
 
 export const mockTags: Tag[] = [
-  { title: 'Frontend', color: 'primary' },
-  { title: 'Backend', color: 'success' },
-  { title: 'Bug', color: 'danger' },
-  { title: 'Design', color: 'warning' }
+  { title: "RESEARCH", color: "bg-blue-100 text-blue-600" },
+  { title: "BRAND", color: "bg-purple-100 text-purple-600" },
+  { title: "FRONTEND", color: "bg-cyan-100 text-cyan-600" },
+  { title: "MARKETING", color: "bg-orange-100 text-orange-600" },
+  { title: "A11Y", color: "bg-teal-100 text-teal-600" },
+  { title: "PRODUCT", color: "bg-purple-100 text-purple-600" },
+  { title: "PLATFORM", color: "bg-pink-100 text-pink-600" },
+  { title: "DESIGN", color: "bg-fuchsia-100 text-fuchsia-600" },
+  { title: "BUG", color: "bg-rose-100 text-rose-600" },
 ];
 
 export const mockProjects: Project[] = [
   {
-    id: 'proj-1',
-    name: 'Desenvolvimento do Kanban',
+    id: "proj-1",
+    name: "Roadmap board",
     boards: [
       {
-        id: 'board-1',
-        title: 'A Fazer',
+        id: "board-1",
+        title: "Backlog",
         order: 0,
         tasks: [
           {
-            id: 'task-1',
-            title: 'Configurar React Router',
-            description: 'Instalar react-router-dom e criar as rotas principais',
+            id: "task-1",
+            title: "Research competitor onboarding flows",
+            description: "",
             order: 0,
             creationDate: new Date().toISOString(),
             dueDate: new Date(Date.now() + 86400000).toISOString(),
-            priority: 'Alta',
+            priority: "Alta",
             tags: [mockTags[0]],
-            assignees: [mockUsers[0]]
+            assignees: [mockUsers[0], mockUsers[1]],
           },
           {
-            id: 'task-2',
-            title: 'Modelar Dados',
-            description: 'Criar as interfaces baseadas no diagrama de classes',
+            id: "task-2",
+            title: "Draft Q3 brand guidelines",
+            description: "",
             order: 1,
             creationDate: new Date().toISOString(),
             dueDate: new Date(Date.now() + 86400000 * 2).toISOString(),
-            priority: 'Média',
+            priority: "Média",
             tags: [mockTags[1]],
-            assignees: [mockUsers[1]]
-          }
-        ]
+            assignees: [mockUsers[2]],
+          },
+        ],
       },
       {
-        id: 'board-2',
-        title: 'Em Progresso',
+        id: "board-2",
+        title: "To do",
         order: 1,
         tasks: [
           {
-            id: 'task-3',
-            title: 'Configurar ambiente',
-            description: 'Rodar npm install e verificar os pacotes',
+            id: "task-3",
+            title: "Wire up billing settings page",
+            description: "",
             order: 0,
             creationDate: new Date().toISOString(),
             dueDate: new Date(Date.now() + 86400000).toISOString(),
-            priority: 'Baixa',
-            tags: [],
-            assignees: [mockUsers[0]]
-          }
-        ]
+            priority: "Alta",
+            tags: [mockTags[2]],
+            assignees: [mockUsers[3]],
+          },
+          {
+            id: "task-4",
+            title: "Prepare launch email sequence",
+            description: "",
+            order: 1,
+            creationDate: new Date().toISOString(),
+            dueDate: new Date(Date.now() + 86400000 * 3).toISOString(),
+            priority: "Alta",
+            tags: [mockTags[3]],
+            assignees: [mockUsers[4], mockUsers[5]],
+          },
+          {
+            id: "task-5",
+            title: "Audit accessibility on checkout",
+            description: "",
+            order: 2,
+            creationDate: new Date().toISOString(),
+            dueDate: new Date(Date.now() + 86400000 * 4).toISOString(),
+            priority: "Alta",
+            tags: [mockTags[4]],
+            assignees: [mockUsers[6]],
+          },
+        ],
       },
       {
-        id: 'board-3',
-        title: 'Concluído',
+        id: "board-3",
+        title: "In progress",
         order: 2,
-        tasks: []
-      }
-    ]
-  },
-  {
-    id: 'proj-2',
-    name: 'Projeto de Marketing',
-    boards: [
-      {
-        id: 'board-11',
-        title: 'Ideias',
-        order: 0,
         tasks: [
           {
-            id: 'task-101',
-            title: 'Campanha de Redes Sociais',
-            description: 'Criar posts para o próximo mês',
+            id: "task-6",
+            title: "Ship new dashboard analytics widgets",
+            description: "",
             order: 0,
             creationDate: new Date().toISOString(),
-            dueDate: new Date(Date.now() + 86400000 * 5).toISOString(),
-            priority: 'Média',
-            tags: [mockTags[3]],
-            assignees: []
-          }
-        ]
+            dueDate: new Date(Date.now() + 86400000).toISOString(),
+            priority: "Média",
+            tags: [mockTags[5]],
+            assignees: [mockUsers[0], mockUsers[3], mockUsers[2]],
+          },
+          {
+            id: "task-7",
+            title: "Migrate auth to passkeys",
+            description: "",
+            order: 1,
+            creationDate: new Date().toISOString(),
+            dueDate: new Date(Date.now() + 86400000).toISOString(),
+            priority: "Média",
+            tags: [mockTags[6]],
+            assignees: [mockUsers[1]],
+          },
+        ],
       },
       {
-        id: 'board-12',
-        title: 'Revisão',
-        order: 1,
-        tasks: []
-      }
-    ]
-  }
+        id: "board-4",
+        title: "Done",
+        order: 3,
+        tasks: [
+          {
+            id: "task-8",
+            title: "Refresh pricing page hero",
+            description: "",
+            order: 0,
+            creationDate: new Date().toISOString(),
+            dueDate: new Date(Date.now() + 86400000).toISOString(),
+            priority: "Baixa",
+            tags: [mockTags[7]],
+            assignees: [mockUsers[4]],
+          },
+          {
+            id: "task-9",
+            title: "Fix Safari drag flicker",
+            description: "",
+            order: 1,
+            creationDate: new Date().toISOString(),
+            dueDate: new Date(Date.now() + 86400000).toISOString(),
+            priority: "Alta",
+            tags: [mockTags[8]],
+            assignees: [mockUsers[6]],
+          },
+        ],
+      },
+    ],
+  },
 ];

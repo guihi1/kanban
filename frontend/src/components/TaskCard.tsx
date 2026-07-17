@@ -1,15 +1,6 @@
-import { Draggable } from '@hello-pangea/dnd';
-import type { Task } from '../models/types';
-import TagBadge from './TagBadge';
-
-const getPriorityColor = (priority: string) => {
-  switch (priority.toLowerCase()) {
-    case 'alta': return 'text-danger';
-    case 'média': return 'text-warning';
-    case 'baixa': return 'text-success';
-    default: return 'text-secondary';
-  }
-};
+import { Draggable } from "@hello-pangea/dnd";
+import type { Task } from "../models/types";
+import TagBadge from "./TagBadge";
 
 const TaskCard = ({ task, index }: { task: Task; index: number }) => {
   return (
@@ -19,47 +10,52 @@ const TaskCard = ({ task, index }: { task: Task; index: number }) => {
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          className={`card mb-3 shadow-sm ${snapshot.isDragging ? 'border-primary' : ''}`}
-          style={{
-            ...provided.draggableProps.style,
-            opacity: snapshot.isDragging ? 0.9 : 1,
-            cursor: 'grab'
-          }}
+          className={`bg-white rounded-xl p-4 border border-slate-100 shadow-[0_1px_3px_rgba(0,0,0,0.05)] mb-3 group 
+            ${snapshot.isDragging ? "shadow-lg border-blue-200 ring-2 ring-blue-100 z-10 rotate-1" : "hover:border-slate-300"} 
+            transition-all duration-200`}
+          style={provided.draggableProps.style}
         >
-          <div className="card-body">
-            <div className="d-flex justify-content-between align-items-start mb-2">
-              <h6 className="card-title mb-0 fw-bold">{task.title}</h6>
-              <span title="Prioridade">
-                <i className={`bi bi-flag-fill ${getPriorityColor(task.priority)}`}></i>
-              </span>
+          {/* Tags */}
+          {task.tags && task.tags.length > 0 && (
+            <div className="mb-3">
+              {task.tags.map((tag, i) => (
+                <TagBadge key={i} tag={tag} />
+              ))}
             </div>
-            
-            {task.description && (
-              <p className="card-text text-muted small mb-2">{task.description}</p>
-            )}
-            
-            {task.tags && task.tags.length > 0 && (
-              <div className="mb-2">
-                {task.tags.map((tag, i) => (
-                  <TagBadge key={i} tag={tag} />
-                ))}
-              </div>
-            )}
-            
-            <div className="d-flex justify-content-between align-items-center mt-3">
-              <div className="small text-muted" title="Data de entrega">
-                <i className="bi bi-calendar-event me-1"></i>
-                {new Date(task.dueDate).toLocaleDateString()}
-              </div>
-              
-              {task.assignees && task.assignees.length > 0 && (
-                <div className="d-flex" title="Atribuído">
-                  {task.assignees.map((assignee, i) => (
-                    <i key={i} className="bi bi-person-circle fs-5 text-secondary ms-1" title={assignee.username}></i>
-                  ))}
-                </div>
-              )}
+          )}
+
+          {/* Title */}
+          <h4 className="font-mono text-[13px] leading-relaxed font-bold text-slate-800 mb-6 pr-2">
+            {task.title}
+          </h4>
+
+          {/* Footer (Avatars and ID) */}
+          <div className="flex items-center justify-between mt-auto">
+            {/* Avatars */}
+            <div className="flex -space-x-1.5">
+              {task.assignees?.map((assignee, i) => {
+                const colors = [
+                  "bg-cyan-500",
+                  "bg-purple-500",
+                  "bg-blue-500",
+                  "bg-emerald-500",
+                ];
+                return (
+                  <div
+                    key={assignee.username}
+                    className={`w-6 h-6 rounded-full flex items-center justify-center text-[8px] text-white font-bold border-2 border-white ${colors[i % colors.length]}`}
+                    title={assignee.username}
+                  >
+                    {assignee.username}
+                  </div>
+                );
+              })}
             </div>
+
+            {/* Task ID */}
+            <span className="font-mono text-xs text-slate-400">
+              #{task.id.split("-")[1] || task.id}
+            </span>
           </div>
         </div>
       )}

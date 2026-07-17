@@ -1,48 +1,50 @@
-import { useMemo } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { mockProjects } from '../data/mockData';
-import Navbar from '../components/Navbar';
-import KanbanBoard from '../components/KanbanBoard';
+import { useMemo } from "react";
+import { useParams, Link } from "react-router-dom";
+import { mockProjects } from "../data/mockData";
+import Navbar from "../components/Navbar";
+import KanbanBoard from "../components/KanbanBoard";
 
 const ProjectKanbanPage = () => {
   const { id } = useParams<{ id: string }>();
-  
+
   const project = useMemo(() => {
-    return mockProjects.find(p => p.id === id);
+    return mockProjects.find((p) => p.id === id) || mockProjects[0];
   }, [id]);
 
   if (!project) {
     return (
-      <div className="min-vh-100 bg-light">
+      <div className="min-h-screen bg-white flex flex-col">
         <Navbar />
-        <div className="container mt-5 text-center">
-          <h2>Projeto não encontrado</h2>
-          <Link to="/" className="btn btn-primary mt-3">Voltar para Projetos</Link>
+        <div className="flex-1 flex flex-col items-center justify-center">
+          <h2 className="text-xl font-bold text-slate-800">
+            Project not found
+          </h2>
+          <Link
+            to="/"
+            className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+          >
+            Back to Projects
+          </Link>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="d-flex flex-column vh-100 bg-light">
+    <div className="flex flex-col h-screen bg-white overflow-hidden">
       <Navbar />
-      
-      <div className="container-fluid flex-grow-1 d-flex flex-column overflow-hidden pb-3">
-        <div className="d-flex justify-content-between align-items-center mb-3">
-          <div className="d-flex align-items-center gap-3">
-            <Link to="/" className="btn btn-sm btn-outline-secondary">
-              <i className="bi bi-arrow-left"></i>
-            </Link>
-            <h3 className="fw-bold mb-0 text-dark">{project.name}</h3>
-          </div>
-          
-          <button className="btn btn-primary d-flex align-items-center gap-2">
-            <i className="bi bi-plus-lg"></i>
-            Nova Tarefa
-          </button>
+
+      <div className="flex-1 flex flex-col pt-12 pb-4 overflow-hidden">
+        <div className="px-8 mb-8 flex flex-col gap-2">
+          <h2 className="font-mono text-3xl font-bold text-slate-900 tracking-tight">
+            Roadmap board
+          </h2>
+          <p className="font-mono text-sm text-slate-400">
+            Drag work across stages. Everything auto-saves.
+          </p>
         </div>
 
-        <div className="flex-grow-1 overflow-hidden">
+        <div className="flex-1 overflow-hidden">
           <KanbanBoard project={project} />
         </div>
       </div>
