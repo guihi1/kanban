@@ -23,6 +23,7 @@ const KanbanBoard = ({ initialProject }: { initialProject: Project }) => {
     title: "",
     description: "",
     priority: "Medium",
+    tags: "",
   });
 
   const [isSaving, setIsSaving] = useState(false);
@@ -175,7 +176,7 @@ const KanbanBoard = ({ initialProject }: { initialProject: Project }) => {
 
   const openAddTask = (boardId: number) => {
     setEditingTask({ task: null, boardId });
-    setTaskForm({ title: "", description: "", priority: "Medium" });
+    setTaskForm({ title: "", description: "", priority: "Medium", tags: "" });
     setIsTaskModalOpen(true);
   };
 
@@ -185,6 +186,7 @@ const KanbanBoard = ({ initialProject }: { initialProject: Project }) => {
       title: task.title,
       description: task.description || "",
       priority: task.priority || "Medium",
+      tags: task.tags ? task.tags.map(t => t.title).join(", ") : "",
     });
     setIsTaskModalOpen(true);
   };
@@ -199,6 +201,15 @@ const KanbanBoard = ({ initialProject }: { initialProject: Project }) => {
       const board = data.boards.find((b) => b.id === boardId);
       if (!board) return;
 
+      const tagTitles = taskForm.tags.split(",").map(t => t.trim()).filter(Boolean);
+      const colors = ["bg-red-400", "bg-orange-400", "bg-amber-400", "bg-green-400", "bg-blue-400", "bg-indigo-400", "bg-purple-400", "bg-pink-400"];
+      
+      const parsedTags = tagTitles.map(title => {
+        const existing = editingTask.task?.tags?.find(t => t.title.toLowerCase() === title.toLowerCase());
+        if (existing) return existing;
+        return { title, color: colors[title.length % colors.length] };
+      });
+
       if (editingTask.task) {
         // Update
         const updated = await api.updateTask({
@@ -206,6 +217,7 @@ const KanbanBoard = ({ initialProject }: { initialProject: Project }) => {
           title: taskForm.title,
           description: taskForm.description,
           priority: taskForm.priority,
+          tags: parsedTags,
         });
         const newBoards = data.boards.map((b) =>
           b.id === boardId
@@ -222,6 +234,7 @@ const KanbanBoard = ({ initialProject }: { initialProject: Project }) => {
           title: taskForm.title,
           description: taskForm.description,
           priority: taskForm.priority,
+          tags: parsedTags,
           orderIndex: board.tasks ? board.tasks.length : 0,
           board: { id: boardId } as any,
         });
@@ -383,6 +396,21 @@ const KanbanBoard = ({ initialProject }: { initialProject: Project }) => {
               <option value="Medium">Medium</option>
               <option value="High">High</option>
             </select>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-1">
+              Tags (comma separated)
+            </label>
+            <input
+              type="text"
+              disabled={isSaving}
+              value={taskForm.tags}
+              onChange={(e) =>
+                setTaskForm({ ...taskForm, tags: e.target.value })
+              }
+              className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-900"
+              placeholder="e.g. Bug, Frontend, Urgent"
+            />
           </div>
           <div className="flex justify-end gap-3 mt-4">
             <button

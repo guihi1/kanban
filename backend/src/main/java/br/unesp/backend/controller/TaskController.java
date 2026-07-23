@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import br.unesp.backend.model.Task;
+import br.unesp.backend.model.Tag;
 import br.unesp.backend.repository.TaskRepository;
+import br.unesp.backend.repository.TagRepository;
 
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,6 +28,19 @@ public class TaskController {
 
     @Autowired
     private TaskRepository taskRepository;
+
+    @Autowired
+    private TagRepository tagRepository;
+
+    private void saveTransientTags(Task task) {
+        if (task.getTags() != null) {
+            for (Tag tag : task.getTags()) {
+                if (tag.getId() == null) {
+                    tagRepository.save(tag);
+                }
+            }
+        }
+    }
 
     @GetMapping(value = "/{id}", produces = "application/json")
     public ResponseEntity<Task> getTask(@PathVariable(value = "id") Long id) {
@@ -47,12 +62,16 @@ public class TaskController {
             task.setCreationDate(new java.util.Date());
         }
 
+        saveTransientTags(task);
+
         Task newTask = taskRepository.save(task);
         return new ResponseEntity<>(newTask, HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/", produces = "application/json")
     public ResponseEntity<Task> updateTask(@RequestBody Task task) {
+
+        saveTransientTags(task);
 
         Task updatedTask = taskRepository.save(task);
         return new ResponseEntity<>(updatedTask, HttpStatus.OK);

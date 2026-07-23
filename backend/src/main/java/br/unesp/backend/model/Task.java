@@ -33,7 +33,7 @@ public class Task {
     @ManyToOne
     private User assignedUser;
 
-    @ManyToMany
+    @ManyToMany(cascade = jakarta.persistence.CascadeType.ALL)
     @JoinTable(name = "task_tags")
     private List<Tag> tags;
  
