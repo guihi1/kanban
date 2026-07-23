@@ -33,7 +33,7 @@ public class Project {
     )
     private List<User> members;
 
-    @OneToMany(mappedBy = "project")
+    @OneToMany(mappedBy = "project", cascade = jakarta.persistence.CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<Board> boards;
 
