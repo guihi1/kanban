@@ -18,8 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import br.unesp.backend.model.Task;
 import br.unesp.backend.repository.TaskRepository;
 
-@Controller("TaskController")
-@RequestMapping(value = "task")
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController("TaskController")
+@RequestMapping(value = "/task")
 public class TaskController {
 
     @Autowired
@@ -32,14 +34,14 @@ public class TaskController {
         return new ResponseEntity<>(task.get(), HttpStatus.OK);
     }
 
-    @GetMapping(value = "/", produces = "application/json")
+    @GetMapping(value = {"", "/"}, produces = "application/json")
     public ResponseEntity<ArrayList<Task>> getAllTasks() {
 
         ArrayList<Task> allTasks = (ArrayList<Task>) taskRepository.findAll();
         return new ResponseEntity<>(allTasks, HttpStatus.OK);
     }
 
-    @PostMapping(value = "/")
+    @PostMapping(value = {"", "/"})
     public ResponseEntity<Task> registerTask(@RequestBody Task task) {
         if (task.getCreationDate() == null) {
             task.setCreationDate(new java.util.Date());

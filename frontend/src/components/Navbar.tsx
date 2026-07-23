@@ -12,14 +12,11 @@ const Navbar = () => {
           K
         </div>
 
-        {/* Title and subtitle */}
-        <div className="flex flex-col">
-          <h1 className="font-mono text-xl font-bold tracking-tight text-slate-900 leading-tight">
+        {/* Title */}
+        <div className="flex items-center">
+          <h1 className="font-mono text-xl font-bold tracking-tight text-slate-900">
             kanban
           </h1>
-          <span className="font-mono text-xs text-slate-400 tracking-wide">
-            Product &middot; Sprint 24
-          </span>
         </div>
       </div>
 

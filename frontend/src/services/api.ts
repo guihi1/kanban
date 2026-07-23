@@ -1,4 +1,4 @@
-import type { Project, Task, User } from "../models/types";
+import type { Project, Task, User, Board } from "../models/types";
 
 const authFetch = async (url: string, options: RequestInit = {}) => {
   const token = localStorage.getItem("token");
@@ -67,10 +67,24 @@ export const api = {
 
   getProjects: (): Promise<Project[]> => authFetch("/project/"),
   getProject: (id: number): Promise<Project> => authFetch(`/project/${id}`),
+  createProject: (project: Partial<Project>): Promise<Project> =>
+    authFetch("/project/", { method: "POST", body: JSON.stringify(project) }),
+  updateProject: (project: Project): Promise<Project> =>
+    authFetch("/project/", { method: "PUT", body: JSON.stringify(project) }),
+  deleteProject: (id: number): Promise<void> =>
+    authFetch(`/project/${id}`, { method: "DELETE" }),
 
+  createBoard: (board: Partial<Board>): Promise<Board> =>
+    authFetch("/board/", { method: "POST", body: JSON.stringify(board) }),
+  updateBoard: (board: Board): Promise<Board> =>
+    authFetch("/board/", { method: "PUT", body: JSON.stringify(board) }),
+  deleteBoard: (id: number): Promise<void> =>
+    authFetch(`/board/${id}`, { method: "DELETE" }),
+
+  createTask: (task: Partial<Task>): Promise<Task> =>
+    authFetch("/task/", { method: "POST", body: JSON.stringify(task) }),
   updateTask: (task: Task): Promise<Task> =>
-    authFetch("/task/", {
-      method: "PUT",
-      body: JSON.stringify(task),
-    }),
+    authFetch("/task/", { method: "PUT", body: JSON.stringify(task) }),
+  deleteTask: (id: number): Promise<void> =>
+    authFetch(`/task/${id}`, { method: "DELETE" }),
 };

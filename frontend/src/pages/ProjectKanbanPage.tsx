@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { ArrowLeft } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import KanbanBoard from '../components/KanbanBoard';
 import { api } from '../services/api';
@@ -56,14 +57,22 @@ const ProjectKanbanPage = () => {
     <div className="flex flex-col h-screen bg-white overflow-hidden">
       <Navbar />
       
-      <div className="flex-1 flex flex-col pt-12 pb-4 overflow-hidden">
-        <div className="px-8 mb-8 flex flex-col gap-2">
-          <h2 className="font-mono text-3xl font-bold text-slate-900 tracking-tight">
-            {project.name}
-          </h2>
-          <p className="font-mono text-sm text-slate-400">
-            Drag work across stages. Everything auto-saves.
-          </p>
+      <div className="flex-1 flex flex-col pt-8 pb-4 overflow-hidden">
+        <div className="px-8 mb-6 flex flex-col gap-4">
+          <div>
+            <Link to="/projects" className="inline-flex items-center gap-2 text-slate-500 hover:text-slate-900 transition-colors text-sm font-medium">
+              <ArrowLeft size={16} />
+              Back to Projects
+            </Link>
+          </div>
+          <div className="flex flex-col gap-1">
+            <h2 className="font-mono text-3xl font-bold text-slate-900 tracking-tight">
+              {project.name}
+            </h2>
+            <p className="font-mono text-sm text-slate-400">
+              Drag work across stages. Everything auto-saves.
+            </p>
+          </div>
         </div>
 
         <div className="flex-1 overflow-hidden">

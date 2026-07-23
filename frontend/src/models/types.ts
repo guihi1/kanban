@@ -29,6 +29,7 @@ export interface Board {
   title: string;
   orderIndex: number;
   tasks: Task[];
+  project?: { id: number };
 }
 
 export interface Project {
