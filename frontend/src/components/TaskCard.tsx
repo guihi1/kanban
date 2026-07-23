@@ -2,6 +2,19 @@ import { Draggable } from "@hello-pangea/dnd";
 import type { Task } from "../models/types";
 import TagBadge from "./TagBadge";
 
+const getPriorityColor = (priority?: string) => {
+  switch (priority?.toLowerCase()) {
+    case "high":
+      return "bg-red-500";
+    case "medium":
+      return "bg-amber-400";
+    case "low":
+      return "bg-emerald-400";
+    default:
+      return "bg-slate-300";
+  }
+};
+
 const TaskCard = ({ task, index }: { task: Task; index: number }) => {
   return (
     <Draggable draggableId={task.id.toString()} index={index}>
@@ -25,11 +38,18 @@ const TaskCard = ({ task, index }: { task: Task; index: number }) => {
           )}
 
           {/* Title */}
-          <h4 className="font-mono text-[13px] leading-relaxed font-bold text-slate-800 mb-6 pr-2">
+          <h4 className="font-mono text-[13px] leading-relaxed font-bold text-slate-800 mb-1 pr-2">
             {task.title}
           </h4>
 
-          {/* Footer (Avatars and ID) */}
+          {/* Description */}
+          {task.description && (
+            <p className="text-xs text-slate-500 mb-4 line-clamp-3">
+              {task.description}
+            </p>
+          )}
+          {!task.description && <div className="mb-4"></div>}
+
           <div className="flex items-center justify-between mt-auto">
             {/* Avatars */}
             <div className="flex -space-x-1.5">
@@ -43,8 +63,17 @@ const TaskCard = ({ task, index }: { task: Task; index: number }) => {
               )}
             </div>
 
-            {/* Task ID */}
-            <span className="font-mono text-xs text-slate-400">#{task.id}</span>
+            {/* Priority */}
+            <div
+              className="flex items-center"
+              title={`Priority: ${task.priority || "Medium"}`}
+            >
+              <div
+                className={`w-2.5 h-2.5 rounded-full shadow-sm ${getPriorityColor(
+                  task.priority,
+                )}`}
+              ></div>
+            </div>
           </div>
         </div>
       )}
