@@ -19,6 +19,8 @@ const KanbanColumn = ({ board }: { board: Board }) => {
     }
   };
 
+  const tasks = board.tasks || [];
+
   return (
     <div className="w-[320px] flex-shrink-0 flex flex-col max-h-full">
       <div className="bg-slate-50/80 rounded-2xl p-3 flex flex-col h-full border border-slate-100">
@@ -31,7 +33,7 @@ const KanbanColumn = ({ board }: { board: Board }) => {
               {board.title}
             </h3>
             <span className="font-mono text-xs px-2 py-0.5 rounded-full bg-slate-200/50 text-slate-500 font-medium">
-              {board.tasks.length}
+              {tasks.length}
             </span>
           </div>
           <button className="text-slate-400 hover:text-slate-600 transition-colors">
@@ -39,7 +41,8 @@ const KanbanColumn = ({ board }: { board: Board }) => {
           </button>
         </div>
 
-        <Droppable droppableId={board.id}>
+        {/* Droppable Area */}
+        <Droppable droppableId={board.id.toString()}>
           {(provided, snapshot) => (
             <div
               ref={provided.innerRef}
@@ -48,9 +51,11 @@ const KanbanColumn = ({ board }: { board: Board }) => {
                 }`}
               style={{ minHeight: "150px" }}
             >
-              {board.tasks.map((task, index) => (
-                <TaskCard key={task.id} task={task} index={index} />
-              ))}
+              {tasks
+                .sort((a, b) => a.orderIndex - b.orderIndex)
+                .map((task, index) => (
+                  <TaskCard key={task.id} task={task} index={index} />
+                ))}
               {provided.placeholder}
             </div>
           )}

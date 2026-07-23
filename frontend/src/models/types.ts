@@ -1,35 +1,40 @@
 export interface User {
+  id: number;
   username: string;
-  email: string;
-  password?: string;
+  email?: string;
+  role?: string;
 }
 
 export interface Tag {
+  id?: number;
   title: string;
   color: string;
 }
 
 export interface Task {
-  id: string;
+  id: number;
   title: string;
   description: string;
-  order: number;
+  orderIndex: number;
   creationDate: string;
   dueDate: string;
-  priority: "Baixa" | "Média" | "Alta" | string;
-  tags: Tag[];
-  assignees?: User[];
+  priority: string;
+  assignedUser?: User;
+  tags?: Tag[];
+  board?: { id: number };
 }
 
 export interface Board {
-  id: string;
+  id: number;
   title: string;
-  order: number;
+  orderIndex: number;
   tasks: Task[];
 }
 
 export interface Project {
-  id: string;
+  id: number;
   name: string;
+  owner?: User;
+  members?: User[];
   boards: Board[];
 }

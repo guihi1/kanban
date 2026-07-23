@@ -4,7 +4,7 @@ import TagBadge from "./TagBadge";
 
 const TaskCard = ({ task, index }: { task: Task; index: number }) => {
   return (
-    <Draggable draggableId={task.id} index={index}>
+    <Draggable draggableId={task.id.toString()} index={index}>
       {(provided, snapshot) => (
         <div
           ref={provided.innerRef}
@@ -33,29 +33,18 @@ const TaskCard = ({ task, index }: { task: Task; index: number }) => {
           <div className="flex items-center justify-between mt-auto">
             {/* Avatars */}
             <div className="flex -space-x-1.5">
-              {task.assignees?.map((assignee, i) => {
-                const colors = [
-                  "bg-cyan-500",
-                  "bg-purple-500",
-                  "bg-blue-500",
-                  "bg-emerald-500",
-                ];
-                return (
-                  <div
-                    key={assignee.username}
-                    className={`w-6 h-6 rounded-full flex items-center justify-center text-[8px] text-white font-bold border-2 border-white ${colors[i % colors.length]}`}
-                    title={assignee.username}
-                  >
-                    {assignee.username}
-                  </div>
-                );
-              })}
+              {task.assignedUser && (
+                <div
+                  className={`w-6 h-6 rounded-full flex items-center justify-center text-[8px] text-white font-bold border-2 border-white bg-blue-500`}
+                  title={task.assignedUser.username}
+                >
+                  {task.assignedUser.username.substring(0, 2).toUpperCase()}
+                </div>
+              )}
             </div>
 
             {/* Task ID */}
-            <span className="font-mono text-xs text-slate-400">
-              #{task.id.split("-")[1] || task.id}
-            </span>
+            <span className="font-mono text-xs text-slate-400">#{task.id}</span>
           </div>
         </div>
       )}
