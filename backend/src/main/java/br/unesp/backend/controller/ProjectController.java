@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import br.unesp.backend.model.Project;
+import br.unesp.backend.model.User;
 import br.unesp.backend.repository.ProjectRepository;
 
 @Controller("ProjectController")
@@ -63,4 +65,14 @@ public class ProjectController {
         
         return new ResponseEntity<>("ok",HttpStatus.OK);
     }
-};
+
+    @GetMapping("/me")
+    public ResponseEntity<ArrayList<Project>> getMyProjects(Authentication authentication) {
+        User user = (User) authentication.getPrincipal();
+        Long userId = user.getId();
+
+        ArrayList<Project> myProjects = projectRepository.findByOwnerId(userId);
+        
+        return new ResponseEntity<>(myProjects ,HttpStatus.OK);
+    }
+}

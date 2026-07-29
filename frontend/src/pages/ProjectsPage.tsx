@@ -23,7 +23,7 @@ const ProjectsPage = () => {
   const fetchProjects = async () => {
     try {
       setLoading(true);
-      const data = await api.getProjects();
+      const data = await api.getMyProjects();
       setProjects(data);
     } catch (err) {
       setError("Failed to load projects");
@@ -59,6 +59,7 @@ const ProjectsPage = () => {
       } else {
         const created = await api.createProject({
           name: projectName,
+          owner: await api.getMe(),
           boards: [],
         });
         setProjects([...projects, created]);

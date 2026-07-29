@@ -73,6 +73,7 @@ export const api = {
     authFetch("/project/", { method: "PUT", body: JSON.stringify(project) }),
   deleteProject: (id: number): Promise<void> =>
     authFetch(`/project/${id}`, { method: "DELETE" }),
+  getMyProjects: (): Promise<Project[]> => authFetch("/project/me"),
 
   createBoard: (board: Partial<Board>): Promise<Board> =>
     authFetch("/board/", { method: "POST", body: JSON.stringify(board) }),
