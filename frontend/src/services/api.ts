@@ -1,6 +1,9 @@
 import type { Project, Task, User, Board } from "../models/types";
 
-const authFetch = async (url: string, options: RequestInit = {}) => {
+const API_URL = import.meta.env.VITE_API_URL || "";
+
+const authFetch = async (endpoint: string, options: RequestInit = {}) => {
+  const url = `${API_URL}${endpoint}`;
   const token = localStorage.getItem("token");
 
   const headers = {
@@ -35,7 +38,7 @@ const authFetch = async (url: string, options: RequestInit = {}) => {
 
 export const api = {
   login: async (username: string, password: string) => {
-    const res = await fetch("/auth/login", {
+    const res = await fetch(`${API_URL}/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, password }),
@@ -49,7 +52,7 @@ export const api = {
   },
 
   register: async (username: string, password: string) => {
-    const res = await fetch("/auth/register", {
+    const res = await fetch(`${API_URL}/auth/register`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, password }),
